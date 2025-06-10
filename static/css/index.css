@@ -5,7 +5,7 @@ body {
 }
 
 .bright {
-    background-color: rgb(33, 32, 35);
+    background-color: rgb(17, 16, 19);
 }
 
 .icon-link {
@@ -103,6 +103,73 @@ body {
 .slider-pagination .slider-page {
     background: #d3d3d3;
     margin: 0 1rem;
+}
+
+.goals-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    padding: 1rem 0;
+}
+
+.goal-card {
+    padding: 1.5rem 2rem 0.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.goal-card h4 {
+    color: white;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    font-family: 'Google Sans', sans-serif;
+}
+
+.methods-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3rem;
+    padding: 1rem 0;
+}
+
+.method-card {
+    flex: 1 1 40%;
+    padding: 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.method-card:nth-child(3) {
+  flex: 1 1 100%;
+}
+
+.method-card h4 {
+    margin-bottom: -0.2rem;
+    color: white;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    font-family: 'Google Sans', sans-serif;
+}
+
+.method-image {
+    border-radius: 20px;
+    width: 50%;
+    margin: 2rem 0;
 }
 
 .footer {

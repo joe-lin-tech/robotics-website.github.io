@@ -170,9 +170,32 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Intro</h2>
           <div class="content has-text-justified">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-            </p>
+            <ul>
+              <li>
+                Teaching embodied agents to perform complex tasks in 3D environments is a core challenge in embodied AI
+              </li>
+              <li>
+                Reinforcement learning (RL) shows promise but is difficult to scale to long-horizon tasks due to sparse rewards & large action spaces
+              </li>
+              <li>
+                Hierarchical reinforcement learning (HRL) offers a natural solution by decomposing tasks into reusable low-level skills orchestrated by a high-level policy
+              </li>
+              <li>
+                Multimodal learning research shows that natural language can specify high-level goals for agents
+              </li>
+              <li>
+                We've extended the Habitat Lab framework to incorporate natural language instructions into the high-level controller to pick low-level skills conditioned on language & visual observations
+              </li>
+              <li>
+                We've exploreed methods such as feature-wise linear modulation (FiLM) and cross-attention mechanisms to fuse language with vision
+              </li>
+              <li>
+                We've built on ReplicaCAD's "rearrange_easy" benchmark, auto-generating scene descriptions to create paired language-visual tasks
+              </li>
+              <li>
+                We've evaluated how language-conditioned HRL agents perform against purely vision-based baselines
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -180,33 +203,118 @@
   </section>
   <!-- End paper introduction -->
 
-  <!-- Paper problem -->
+  <!-- Paper goal -->
   <section class="section hero">
     <div class="container">
       <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Problem</h2>
-          <div class="content has-text-justified">
+        <div class="column">
+          <h2 class="title is-3">Goal</h2>
+          <div class="content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+              We aim to create a hierarchical agent that can:
             </p>
+            <div class="goals-container">
+              <div class="goal-card">
+                <h4>Interpret a natural language goal and use it to guide skill selection</h4>
+              </div>
+              <div class="goal-card">
+                <h4>Combine language and visual input to improve task performance and generalization</h4>
+              </div>
+              <div class="goal-card">
+                <h4>Train & evaluate on realistic 3D rearrangement tasks with varying scenes</h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- End paper problem -->
+  <!-- End paper goal -->
 
   <!-- Paper methods -->
   <section class="section hero bright">
     <div class="container">
       <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+        <div class="column">
           <h2 class="title is-3">Methods</h2>
-          <div class="content has-text-justified">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-            </p>
+          <div class="content">
+            <div class="methods-container">
+              <div class="method-card">
+                <h4>Dataset</h4>
+                <ul>
+                  <li>
+                    ReplicaCAD offers a "FRL apartment" environment for Habitat simulation
+                  </li>
+                  <li>
+                    "rearrange_easy" subset has a training split of 50,000 episodes of rearrangement problems over 63 scenes & validation split with 1,000 episodes from another 21 scenes 
+                  </li>
+                  <li>
+                    Language augmentation pipeline:
+                    <ol style="margin-top: 5px">
+                      <li>
+                        Extract target object and goal locations from each episode
+                      </li>
+                      <li>
+                        Map provided indices to scene receptacle locations
+                      </li>
+                      <li>
+                        Generate template sentences for each episode
+                      </li>
+                      <li>
+                        Reword into natural language via Google Gemini 2.0 Flash
+                      </li>
+                      <li>
+                        Transform into feature vectors with OpenAI's ViT-B/32 CLIP model 
+                      </li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+              <div class="method-card">
+                <h4>Low-Level Skills Training</h4>
+                <ul>
+                  <li>
+                    Habitat Lab provides framework for training low-level skills composed by a high-level policy in a HRL environment
+                  </li>
+                  <li>
+                    These skills correspond to separate, reusable behaviors (like picking or placing objects) & are trained independently using Proximal Policy Optimization (PPO)
+                  </li>
+                  <li>
+                    We use the following 3 low-level skills provided by Habitat Lab:
+                    <ol style="margin-top: 5px">
+                      <li>
+                        pick
+                      </li>
+                      <li>
+                        place
+                      </li>
+                      <li>
+                        navigate
+                      </li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+              <div class="method-card">
+                <h4>HRL Training</h4>
+                <ul>
+                  <li>
+                    We train a HRL agent based on Habitat Lab's benchmark to create a high-level policy that picks between pre-trained low-level skills
+                  </li>
+                  <li>
+                    High-level policy receives visual observations and language instructions as input, and outputs sequence of skills with appropriate parameters
+                  </li>
+                  <li>
+                    The model is also given the target object + position along with goal position
+                  </li>
+                  <li>
+                    We experiment with a baseline with no language input, visual feature conditioning through FiLM, and cross-attention visual & language feature fusion
+                  </li>
+                </ul>
+
+                <img class="method-image" src="static/images/vision_language_pipeline.png" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+              </div>
+            </div>
           </div>
         </div>
       </div>
