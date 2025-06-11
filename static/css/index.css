@@ -38,7 +38,6 @@ body {
 }
 
 .publication-title {
-    display: inline-block;
     padding: 0.1rem 0;
     background: linear-gradient(90deg,rgb(110, 159, 255) 0%, rgb(196, 128, 201) 50%, rgba(213, 102, 118, 1) 100%);
     -webkit-background-clip: text;
