@@ -130,7 +130,17 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+              We explore the use of natural language to guide hierarchical reinforcement learning (HRL) agents 
+              in long-horizon indoor rearrangement tasks. Using the Habitat Lab framework and the ReplicaCAD 
+              <i>rearrange_easy</i> benchmark, we train a high-level policy to select among pre-trained low-level 
+              skills based on both visual observations and language instructions. To fuse multimodal inputs, 
+              we evaluate two techniques: FiLM and cross-attention. Language 
+              instructions are generated using a large language model and embedded via a pretrained CLIP 
+              encoder. Our results show that incorporating language slightly improves task performance; 
+              however, the overall success rate remains low due to compounding errors from unreliable 
+              low-level skills. This suggests that while language offers valuable context, its benefits 
+              are limited without reliable underlying skills. We discuss key challenges and propose directions 
+              for mitigating cascading failures.  
             </p>
           </div>
         </div>
@@ -167,13 +177,13 @@
           <div class="content has-text-justified">
             <ul>
               <li>
-                Teaching embodied agents to perform complex tasks in 3D environments is a core challenge in embodied AI
+                Teaching embodied agents to perform everyday, complex tasks in 3D environments is a core challenge in embodied AI
               </li>
               <li>
                 Reinforcement learning (RL) shows promise but is difficult to scale to long-horizon tasks due to sparse rewards & large action spaces
               </li>
               <li>
-                Hierarchical reinforcement learning (HRL) offers a natural solution by decomposing tasks into reusable low-level skills orchestrated by a high-level policy
+                HRL offers a natural solution by decomposing tasks into reusable low-level skills orchestrated by a high-level policy
               </li>
               <li>
                 Multimodal learning research shows that natural language can specify high-level goals for agents
@@ -210,10 +220,10 @@
             </p>
             <div class="goals-container">
               <div class="goal-card">
-                <h4>Interpret a natural language goal and use it to guide skill selection</h4>
+                <h4>Interpret a natural language goal & use it to guide skill selection</h4>
               </div>
               <div class="goal-card">
-                <h4>Combine language and visual input to improve task performance and generalization</h4>
+                <h4>Combine language & visual input to improve task performance & generalization</h4>
               </div>
               <div class="goal-card">
                 <h4>Train & evaluate on realistic 3D rearrangement tasks with varying scenes</h4>
@@ -305,9 +315,38 @@
                   <li>
                     We experiment with a baseline with no language input, visual feature conditioning through FiLM, and cross-attention visual & language feature fusion
                   </li>
+                  <li>
+                    <b>Baseline:</b> benchmark provided by Habitat Lab; visual observations transformed into 
+                    features through the provided ResNet-18 encoder, and then fed into a recurrent policy 
+                    network trained with PPO (agent is not conditioned on language input)
+                  </li>
+                  <li>
+                    <b>FiLM:</b> we insert FiLM layers into every ResNet residual block that take CLIP 
+                    language embeddings and produce per-block γ (scale) and β (shift) parameters to 
+                    modulate the visual feature maps before the ReLU, enabling instruction-conditioned 
+                    extraction of task-relevant cues
+                  </li>
+                  <li>
+                    <b>Cross-Attention:</b> We integrate a cross-attention block into the ResNet encoder that
+                    uses language embeddings as the query and ResNet visual features as key/value pairs,
+                    enabling selective attention to spatial regions most relevant to the instruction.
+                  </li>
                 </ul>
 
-                <img class="method-image" src="static/images/vision_language_pipeline.png" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+                <img class="method-image" src="static/images/vision_language_pipeline.png" alt="Vision language pipeline" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+              </div>
+              <div class="method-card">
+                <h4>Reward Function Design</h4>
+                <ul>
+                  <li>
+                    Habitat Lab uses "pddl_subgoal_reward" as its reward signal, which is a sparse reward based on the completion of intermediary goals
+                  </li>
+                  <li>
+                    During training we notice the agent struggles to learn from sparse rewards, so we augment the original reward with dense terms to build a dense reward signal, "CompositeReward":
+                  </li>
+                </ul>
+
+                <img class="method-image" src="static/images/dense_reward_signal.png" alt="Dense reward signal" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
               </div>
             </div>
           </div>
@@ -323,10 +362,52 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3">Results</h2>
-          <div class="content has-text-justified">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-            </p>
+          <div class="content">
+            <div class="results-container">
+              <div class="result-card">
+                <h4>Low-Level Skills</h4>
+                <ul>
+                  <li>
+                    Training low-level skill policies was challenging and tedious due to data-hungriness and limited GPU hardware 
+                  </li>
+                  <li>
+                    We achieved ≈60%, ≈55%, and ≈80% on pick, place, navigate, respectively
+                  </li>
+                  <li>
+                    Below are our success rate and training curves:
+                  </li>
+                </ul>
+                <img class="method-image" src="static/images/result_curves.png" alt="Dense reward signal" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+                <ul>
+                  <li>
+                    "action_loss" and "value_loss" were unrepresentative of training progress as expected, unlike "reward"
+                  </li>
+                  <li>
+                    Agent excels at learning "navigate" but struggles with "pick" and "place", often plateauing in success rate
+                  </li>
+                  <li>
+                    Most likely since "navigate" is a high-level locomotion task that requires less degrees of freedom to solve, 
+                    whereas "pick" & "place" suffer from higher-order complexities
+                  </li>
+                </ul>
+              </div>
+              <div class="result-card">
+                <h4>High-Level Neural Policy</h4>
+                <ul>
+                  <li>
+                    Compounding errors from low-level policies led to difficulties with training high-level policy
+                  </li>
+                  <li>
+                    Achieved ≈5% success rate for rearrangement task, whereas the baseline achieves ≈X%
+                  </li>
+                  <li>
+                    We infer the agent learns to prefer inaction to avoid negative rewards, as during training, the agent hones in 
+                    on the "navigate" skill and achieves positive reward learning progress, but progress then halts at a success 
+                    rate of 5% which then plummets, all while rollout durations and object collisions reduce drastically
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
