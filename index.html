@@ -8,16 +8,14 @@
   <meta property="og:title" content="From Words to Actions: Language-Guided Hierarchical RL for Object Rearrangement"/>
   <meta property="og:description" content="UCLA COM SCI 188 Final Project by Joe Lin, Allen Luo, and Nishant Ray"/>
   <meta property="og:url" content="https://joe-lin-tech.github.io/robotics-website.github.io/"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/images/SOME IMAGE.png" />
+  <meta property="og:image" content="static/images/carousel2.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   
   
   <meta name="twitter:title" content="From Words to Actions: Language-Guided Hierarchical RL for Object Rearrangement">
   <meta name="twitter:description" content="UCLA COM SCI 188 Final Project by Joe Lin, Allen Luo, and Nishant Ray">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/SOME IMAGE.png">
+  <meta name="twitter:image" content="static/images/carousel2.png">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">  
   
@@ -63,7 +61,7 @@
               <div class="publication-links">
                 <!-- Paper PDF link -->
                 <span class="link-block">
-                  <a href="hhtps://ADD PAPER LINK" target="_blank" class="external-link button is-normal is-rounded is-link">
+                  <a href="https://joe-lin-tech.github.io/robotics-website.github.io/static/pdfs/report.pdf" target="_blank" class="external-link button is-normal is-rounded is-link">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -89,31 +87,21 @@
       <div class="container">
         <div id="results-carousel" class="carousel results-carousel">
           <div class="item">
-            <!-- Your image here -->
-            <img class="image" src="static/images/carousel4.jpg" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+            <img class="image" src="static/images/carousel1.png" alt="Pick skill" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
             <h2 class="subtitle has-text-centered">
-              First image description.
+              The "pick" skill provided by the Habitat Lab
             </h2>
           </div>
           <div class="item">
-            <!-- Your image here -->
-            <img class="image" src="static/images/carousel4.jpg" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+            <img class="image" src="static/images/carousel2.png" alt="Place skill" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
             <h2 class="subtitle has-text-centered">
-              Second image description.
+              The "place" skill provided by the Habitat Lab
             </h2>
           </div>
           <div class="item">
-            <!-- Your image here -->
-            <img class="image" src="static/images/carousel4.jpg" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+            <img class="image" src="static/images/carousel3.png" alt="Navigation skill" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
             <h2 class="subtitle has-text-centered">
-              Third image description.
-            </h2>
-          </div>
-          <div class="item">
-            <!-- Your image here -->
-            <img class="image" src="static/images/carousel4.jpg" alt="MY ALT TEXT" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
-            <h2 class="subtitle has-text-centered">
-              Fourth image description.
+              The "navigation" skill provided by the Habitat Lab
             </h2>
           </div>
         </div>
@@ -158,8 +146,9 @@
           <div class="column is-four-fifths">
             <h2 class="title is-3">Video Demo</h2>
             <div class="publication-video">
-              <!-- Youtube embed code here -->
-              <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <video poster="" controls muted loop height="100%">
+                <source src="static/videos/demo.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
         </div>
@@ -368,10 +357,10 @@
                 <h4>Low-Level Skills</h4>
                 <ul>
                   <li>
-                    Training low-level skill policies was challenging and tedious due to data-hungriness and limited GPU hardware 
+                    Training low-level skill policies was challenging due to data-hungry policies and limited GPU hardware 
                   </li>
                   <li>
-                    We achieved ≈60%, ≈55%, and ≈80% on pick, place, navigate, respectively
+                    We achieved ≈60%, ≈45%, and ≈80% on pick, place, navigate, respectively
                   </li>
                   <li>
                     Below are our success rate and training curves:
@@ -398,8 +387,14 @@
                     Compounding errors from low-level policies led to difficulties with training high-level policy
                   </li>
                   <li>
-                    Achieved ≈5% success rate for rearrangement task, whereas the baseline achieves ≈X%
+                    Achieved ≈5% success rate for rearrangement task, whereas the baseline achieves ≈5.9%
                   </li>
+                  <li>
+                    Baseline training success rates can be seen on the left below, while our those of our cross-attention methods are shown on the right:
+                  </li>
+                </ul>
+                <img class="method-image" src="static/images/rearrangement_task.png" alt="Rearrangement task success rates" data-tilt data-tilt-reverse="true" data-tilt-max="2"/>
+                <ul>
                   <li>
                     We infer the agent learns to prefer inaction to avoid negative rewards, as during training, the agent hones in 
                     on the "navigate" skill and achieves positive reward learning progress, but progress then halts at a success 
@@ -422,9 +417,45 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Discussion</h2>
           <div class="content has-text-justified">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-            </p>
+            <ul>
+              <li>
+                Adding language input somewhat decreases task performance, but compounding errors as a result of hierarchical policy skill chaining make observed results difficult to interpret
+              </li>
+              <li>
+                Performance differences may be due to addition of language or incidental correlations & artifacts in the training data
+              </li>
+              <li>
+                The Habitat Challenge in 2022 provides a 30% success rate baseline but this uses a fixed high-level policy that is not learned (reduced complexity & potential errors)
+              </li>
+              <li>
+                Another studied implementation utilizes mobile manipulation skills to reduce compounding errors, achieving a success rate of 64%
+              </li>
+              <li>
+                These findings suggest to not only improve language grounding but to also address the structural instability caused by skill chaining
+              </li>
+              <li>
+                Mitigating compounding errors can be done by prerequisites such as improving skill reliability, refining high-level decision-making, and incorporating corrective feedback mechanisms 
+              </li>
+            </ul>
+            <div class="results-container">
+              <div class="result-card">
+                <h4>Challenges</h4>
+                <ul>
+                  <li>
+                    We faced numerous bugs when working with the Habitat Lab repository due to version-incompatability issues, which greatly hindered our progress
+                  </li>
+                  <li>
+                    The majority of these bugs involved tensor shape issues with the recurrent neural network state encoders used in the policy
+                  </li>
+                  <li>
+                    Training also took significantly longer than expected as aforementioned, with some skills taking multiple days to train
+                  </li>
+                  <li>
+                    Environment issues also stopped us from running on multiple devices
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -439,9 +470,26 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Conclusion</h2>
           <div class="content has-text-justified">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-            </p>
+            <ul>
+              <li>
+                We integrated natural language into hierarchical RL agents for indoor environment rearrangement, combining FiLM and cross-attention to fuse vision and instructions
+              </li>
+              <li>
+                Incorporating language into high-level policy decisions led to modest performance decreases, although the overall success rate remained low due to compounding errors in multi-step tasks
+              </li>
+              <li>
+                Our findings underscore the need for robust low-level skill execution to support language-conditioned high-level policies
+              </li>
+              <li>
+                Language-conditioned policies by themselves are insufficient; architectural and algorithmic strategies are required to mitigate error accumulation
+              </li>
+              <li>
+                Future work should investigate tighter coupling between high- and low-level components and develop more effective training methodologies
+              </li>
+              <li>
+                Enhancing the richness and realism of language annotations will help determine whether agents genuinely understand instructions rather than exploit dataset-specific biases.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -455,7 +503,7 @@
       <div class="container">
         <div class="column is-centered has-text-centered">
           <h2 class="title">Full Paper</h2>
-          <iframe src="static/pdfs/sample.pdf" width="100%" height="550"></iframe>
+          <iframe src="static/pdfs/report.pdf" width="100%" height="550"></iframe>
         </div>
       </div>
     </div>
